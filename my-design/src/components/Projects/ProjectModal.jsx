@@ -204,6 +204,10 @@ useEffect(() => {
   
   // Real-time
   { id: 'socketio', label: 'Socket.io', color: '#010101', bgLight: '#F0F0F0' },
+
+  { id: 'vite', label: 'Vite', color: '#646CFF', bgLight: '#F0F0FF' },
+  { id: 'react-router', label: 'React Router', color: '#CA4245', bgLight: '#FEF0F0' },
+  { id: 'context-api', label: 'Context API', color: '#61DAFB', bgLight: '#E8F9FF' },
 ];
 
   if (!isOpen) return null;
