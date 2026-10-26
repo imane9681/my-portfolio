@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imane Bouasla - Professional CV</title>
+    <!-- استخدمت مكتبة خطوط Google Fonts لجعل التصميم أجمل -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* إعدادات عامة */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #e8ecf1;
+            padding: 40px 20px;
+            color: #1a202c;
+            display: flex;
+            justify-content: center;
+        }
+
+        .cv-container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.12);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* ===== الشريط العلوي (Header) المحسن ===== */
+        .cv-header {
+            background: linear-gradient(135deg, #17447E 0%, #404C99 40%, #733A91 100%);
+            color: white;
+            padding: 35px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* تأثير خلفية إضافي في الهيدر */
+        .cv-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(251, 178, 103, 0.08);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .cv-header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: 10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(251, 178, 103, 0.05);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .header-left {
+            position: relative;
+            z-index: 1;
+        }
+        .header-left h1 {
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: linear-gradient(to right, #ffffff, #f0e6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2px;
+        }
+
+        .header-left .title {
+            font-size: 19px;
+            color: #FBB267;
+            font-weight: 600;
+            margin-top: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        .header-left .subtitle {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+            font-weight: 300;
+            margin-top: 2px;
+            letter-spacing: 0.2px;
+        }
+
+        .header-right {
+            position: relative;
+            z-index: 1;
+            text-align: right;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .header-right .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 2px 0;
+        }
+
+        .header-right .contact-item i {
+            width: 18px;
+            color: #FBB267;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        .header-right a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .header-right a:hover {
+            color: #FBB267;
+        }
+
+        /* ===== التخطيط الرئيسي ===== */
+        .cv-body {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+        }
+
+        /* ===== العمود الأيسر (Sidebar) المحسن ===== */
+        .cv-sidebar {
+            background: #f8fafc;
+            padding: 40px 25px;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #17447E;
+            margin-bottom: 16px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #733A91;
+            font-size: 14px;
+            width: 18px;
+        }
+
+        .sidebar-item {
+            margin-bottom: 28px;
+        }
+        .sidebar-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* المهارات - تصميم متقدم */
+        .skills-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .skill-group-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .skill-tag {
+            background: white;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #2d3748;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+            transition: all 0.2s ease;
+        }
+        .skill-tag:hover {
+            border-color: #733A91;
+            color: #733A91;
+            transform: translateY(-1px);
+        }
+
+        /* اللغات */
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #edf2f7;
+        }
+        .language-item:last-child {
+            border-bottom: none;
+        }
+        .language-item .lang {
+            font-weight: 500;
+            color: #2d3748;
+            font-size: 14px;
+        }
+        .language-item .level {
+            color: #718096;
+            font-size: 13px;
+        }
+
+        /* الشهادات */
+        .cert-item {
+            margin-bottom: 12px;
+        }
+        .cert-item:last-child {
+            margin-bottom: 0;
+        }
+        .cert-item .cert-name {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 14px;
+            display: block;
+        }
+        .cert-item .cert-date {
+            color: #718096;
+            font-size: 13px;
+            margin-top: 2px;
+            display: block;
+        }
+
+        /* ===== المحتوى الرئيسي ===== */
+        .cv-main {
+            padding: 40px 45px;
+        }
+
+        .main-section {
+            margin-bottom: 32px;
+        }
+        .main-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .main-title {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #17447E;
+            margin-bottom: 16px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .main-title i {
+            color: #733A91;
+            font-size: 14px;
+            width: 18px;
+        }
+
+        /* الملخص الشخصي */
+        .summary-text {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #4a5568;
+            font-weight: 400;
+        }
+
+        /* المشاريع والخبرة */
+        .experience-item {
+            margin-bottom: 22px;
+        }
+        .experience-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .experience-header h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .experience-header .company {
+            color: #733A91;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .experience-header .date {
+            font-size: 13px;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .experience-item ul {
+            margin-top: 6px;
+            padding-left: 20px;
+            list-style: none;
+        }
+
+        .experience-item ul li {
+            font-size: 14px;
+            color: #4a5568;
+            line-height: 1.7;
+            margin-bottom: 4px;
+            position: relative;
+            padding-left: 16px;
+        }
+
+        .experience-item ul li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #733A91;
+            font-weight: bold;
+        }
+
+        /* ===== طباعة ===== */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .cv-container {
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .cv-sidebar {
+                background: #f8fafc;
+            }
+            .skill-tag:hover {
+                border-color: #e2e8f0;
+                color: #2d3748;
+                transform: none;
+            }
+        }
+
+        /* ===== متجاوب ===== */
+        @media (max-width: 768px) {
+            .cv-body {
+                grid-template-columns: 1fr;
+            }
+            .cv-sidebar {
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+            }
+            .cv-header {
+                padding: 25px 20px;
+                flex-direction: column;
+                text-align: center;
+            }
+            .header-left h1 {
+                font-size: 32px;
+            }
+            .header-right {
+                text-align: center;
+            }
+            .header-right .contact-item {
+                justify-content: center;
+            }
+            .cv-main {
+                padding: 25px 20px;
+            }
+            .experience-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cv-container">
+        <!-- === الشريط العلوي === -->
+        <header class="cv-header">
+            <div class="header-left">
+                <h1>Imane Bouasla</h1>
+                <div class="title">Full-Stack Developer &amp; UI/UX Designer</div>
+                <div class="subtitle">Transforming complex ideas into simple, impactful digital products</div>
+            </div>
+            <div class="header-right">
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:imane.bouasla@example.com">imane.bouasla@example.com</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>+213 123 456 789</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Skikda, Algeria</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-github"></i>
+                    <a href="#">github.com/imane</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-linkedin-in"></i>
+                    <a href="#">linkedin.com/in/imane</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-globe"></i>
+                    <a href="#">imanebouasla.com</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- === المحتوى === -->
+        <div class="cv-body">
+            
+            <!-- === العمود الأيسر === -->
+            <aside class="cv-sidebar">
+                <!-- المهارات -->
+                <div class="sidebar-item">
+                    <div class="section-title">
+                        <i class="fas fa-code"></i>
+                        Technical Skills
+                    </div>
+                    <div class="skills-wrapper">
+                        <!-- Frontend -->
+                        <div>
+                            <div class="skill-group-title">Frontend</div>
+                            <div class="skills-list">
+                                <span class="skill-tag">React</span>
+                                <span class="skill-tag">Next.js</span>
+                                <span class="skill-tag">TypeScript</span>
+                                <span class="skill-tag">JavaScript</span>
+                                <span class="skill-tag">HTML5</span>
+                                <span class="skill-tag">CSS3</span>
+                                <span class="skill-tag">Tailwind CSS</span>
+                                <span class="skill-tag">Vite</span>
+                            </div>
+                        </div>
+                        <!-- Backend -->
+                        <div>
+                            <div class="skill-group-title">Backend &amp; APIs</div>
+                            <div class="skills-list">
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">Django</span>
+                                <span class="skill-tag">Node.js</span>
+                                <span class="skill-tag">Express</span>
+                                <span class="skill-tag">REST APIs</span>
+                                <span class="skill-tag">JWT Auth</span>
+                                <span class="skill-tag">WebSockets</span>
+                            </div>
+                        </div>
+                        <!-- Databases -->
+                        <div>
+                            <div class="skill-group-title">Databases</div>
+                            <div class="skills-list">
+                                <span class="skill-tag">PostgreSQL</span>
+                                <span class="skill-tag">MySQL</span>
+                                <span class="skill-tag">MongoDB</span>
+                                <span class="skill-tag">Supabase</span>
+                            </div>
+                        </div>
+                        <!-- Tools -->
+                        <div>
+                            <div class="skill-group-title">Design &amp; Tools</div>
+                            <div class="skills-list">
+                                <span class="skill-tag">Figma</span>
+                                <span class="skill-tag">Responsive Design</span>
+                                <span class="skill-tag">UI/UX</span>
+                                <span class="skill-tag">Git</span>
+                                <span class="skill-tag">Vercel</span>
+                                <span class="skill-tag">Recharts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- اللغات -->
+                <div class="sidebar-item">
+                    <div class="section-title">
+                        <i class="fas fa-language"></i>
+                        Languages
+                    </div>
+                    <div class="language-item">
+                        <span class="lang">Arabic</span>
+                        <span class="level">Native</span>
+                    </div>
+                    <div class="language-item">
+                        <span class="lang">English</span>
+                        <span class="level">Professional</span>
+                    </div>
+                    <div class="language-item">
+                        <span class="lang">French</span>
+                        <span class="level">Intermediate</span>
+                    </div>
+                </div>
+
+                <!-- الشهادات -->
+                <div class="sidebar-item">
+                    <div class="section-title">
+                        <i class="fas fa-certificate"></i>
+                        Certifications
+                    </div>
+                    <div class="cert-item">
+                        <span class="cert-name">Web Development Certification</span>
+                        <span class="cert-date">I.S.E.E.G - 2024</span>
+                    </div>
+                </div>
+
+                <!-- الاهتمامات (القطعة المفقودة) -->
+                <div class="sidebar-item">
+                    <div class="section-title">
+                        <i class="fas fa-heart"></i>
+                        Interests &amp; Activities
+                    </div>
+                    <div class="skills-list">
+                        <span class="skill-tag">Open Source</span>
+                        <span class="skill-tag">UI/UX Design</span>
+                        <span class="skill-tag">Artificial Intelligence</span>
+                        <span class="skill-tag">Cloud Computing</span>
+                        <span class="skill-tag">NLP</span>
+                        <span class="skill-tag">Design Thinking</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- === المحتوى الرئيسي === -->
+            <main class="cv-main">
+                
+                <!-- الملخص -->
+                <div class="main-section">
+                    <div class="main-title">
+                        <i class="fas fa-pen-fancy"></i>
+                        Summary
+                    </div>
+                    <p class="summary-text">
+                        Full-Stack Developer and UI/UX Designer bridging the gap between visual creativity and coding precision to build impactful digital products. Combining a solid academic foundation in Computer Science and Distributed Systems with a specialized professional certification in Web Development, I possess a deep understanding of software engineering and scalable technical architectures. I believe the best software solves real problems in the simplest way.
+                    </p>
+                </div>
+
+                <!-- الخبرة والمشاريع -->
+                <div class="main-section">
+                    <div class="main-title">
+                        <i class="fas fa-briefcase"></i>
+                        Experience &amp; Projects
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <h4>ERP System / Enterprise Admin Dashboard</h4>
+                            <span class="company">Full-Stack Project</span>
+                            <span class="date">2024</span>
+                        </div>
+                        <ul>
+                            <li>Designed and developed a comprehensive Enterprise Resource Planning system with interactive admin dashboards.</li>
+                            <li>Utilized <strong>React.js</strong> for the dynamic frontend and <strong>Node.js with MySQL</strong> for scalable backend architecture.</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <h4>All-in-One Collaboration Platform</h4>
+                            <span class="company">Full-Stack Project</span>
+                            <span class="date">2024</span>
+                        </div>
+                        <ul>
+                            <li>Built an integrated workspace management system for real-time team collaboration and task organization.</li>
+                            <li>Engineered seamless communication features and workflow automation using <strong>WebSockets</strong> for instant updates.</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <h4>E-Commerce Platform</h4>
+                            <span class="company">Full-Stack Project</span>
+                            <span class="date">2023</span>
+                        </div>
+                        <ul>
+                            <li>Developed a fully functional online store featuring a smooth shopping cart and secure payment gateway.</li>
+                            <li>Built with a responsive UI and robust product management system using <strong>React and Django</strong>.</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <h4>AI Resume Analyzer</h4>
+                            <span class="company">AI-Powered Project</span>
+                            <span class="date">2023</span>
+                        </div>
+                        <ul>
+                            <li>Designed an intelligent tool that analyzes resumes and provides actionable improvement suggestions.</li>
+                            <li>Integrated Natural Language Processing (NLP) techniques for advanced text analysis.</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <h4>Personal Portfolio Website</h4>
+                            <span class="company">UI/UX &amp; Frontend</span>
+                            <span class="date">2024</span>
+                        </div>
+                        <ul>
+                            <li>Created an interactive personal portfolio showcasing projects and technical skills.</li>
+                            <li>Designed with a modern aesthetic, creative animations, and fully responsive layouts using <strong>React and Tailwind</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- التعليم -->
+                <div class="main-section">
+                    <div class="main-title">
+                        <i class="fas fa-graduation-cap"></i>
+                        Education
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <h4>Master's in Distributed Systems &amp; Networks</h4>
+                            <span class="company">University of 20 August 1955, Skikda</span>
+                            <span class="date">2022</span>
+                        </div>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <h4>Licence in Information Systems</h4>
+                            <span class="company">University of 20 August 1955, Skikda</span>
+                            <span class="date">2020</span>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+</body>
+</html>
