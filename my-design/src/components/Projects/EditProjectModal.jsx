@@ -201,6 +201,7 @@ useEffect(() => {
   { id: 'git', label: 'Git', color: '#F05032', bgLight: '#FEF0EC' },
   { id: 'figma', label: 'Figma', color: '#F24E1E', bgLight: '#FEF0EC' },
   { id: 'vercel', label: 'Vercel', color: '#000000', bgLight: '#F0F0F0' },
+  { id: 'render', label: 'Render', color: '#46E3B7', bgLight: '#E8FDF5' },
   { id: 'api', label: 'REST APIs', color: '#FF6C37', bgLight: '#FFF0EA' },
   
   // AI
