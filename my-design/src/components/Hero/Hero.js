@@ -37,9 +37,8 @@ function Hero({ onNavClick }) {
   }, [words.length]);
 
   const socialIcons = [
-    { icon: FaGithub, url: 'https://github.com', label: 'GitHub' },
-    { icon: FaLinkedinIn, url: 'https://linkedin.com', label: 'LinkedIn' },
-    { icon: FaTwitter, url: 'https://twitter.com', label: 'Twitter' }
+    { icon: FaGithub, url: 'https://github.com/imane9681', label: 'GitHub' },
+    { icon: FaLinkedinIn, url: 'https://www.linkedin.com/in/imane-bouasla-001bba42b', label: 'LinkedIn' },
   ];
 
   const stats = [
