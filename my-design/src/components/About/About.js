@@ -171,7 +171,7 @@ function About() {
     {/* Profile Image */}
     <div className="relative flex justify-center p-5 sm:p-6 md:p-8">
       <img 
-        src="/images/lmbi.png" 
+        src="/images/lmbi2.png" 
         alt="Imane Bouasla" 
         className="w-48 sm:w-56 md:w-64 lg:w-72 h-full object-cover object-top group-hover:scale-110 transition-transform duration-700"
       />

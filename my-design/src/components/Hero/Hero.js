@@ -281,7 +281,7 @@ function Hero({ onNavClick }) {
                 {/* Main Image Container */}
                 <div className="relative">
                   <img 
-                    src="/images/lmbi.png" 
+                    src="/images/lmbi1.png" 
                     alt="Imane Bouasla" 
                     className="w-[45vw] sm:w-[22vw] md:w-[25vw] lg:w-[20vw] h-full object-cover object-top group-hover:scale-110 transition-transform duration-700"
                   />
