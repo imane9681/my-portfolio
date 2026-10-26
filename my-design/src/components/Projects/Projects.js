@@ -26,6 +26,7 @@ function Projects({ isAdmin: externalIsAdmin, projects: externalProjects }) {
   const [serverUrl, setServerUrl] = useState('');
   const sectionRef = useRef(null);
 
+  // دالة مساعدة لترتيب المشاريع
   const sortByDate = useCallback((projectsList) => {
     return [...projectsList].sort((a, b) => {
       const dateA = a.createdAt ? new Date(a.createdAt) : new Date(0);
@@ -34,6 +35,14 @@ function Projects({ isAdmin: externalIsAdmin, projects: externalProjects }) {
     });
   }, []);
 
+  // 1. إعداد رابط الخادم من متغيرات البيئة
+  useEffect(() => {
+    const url = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+    setServerUrl(url);
+    console.log('✅ Server URL:', url);
+  }, []);
+
+  // 2. مراقبة ظهور القسم (للأنيميشن)
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -49,24 +58,16 @@ function Projects({ isAdmin: externalIsAdmin, projects: externalProjects }) {
     return () => observer.disconnect();
   }, []);
 
-  // جلب serverUrl
-  useEffect(() => {
-  // قراءة رابط الخادم من ملف .env
-  const url = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-  setServerUrl(url);
-  console.log('✅ Server URL:', url);
-}, []);
-
-  // جلب المشاريع
+  // 3. جلب المشاريع
   useEffect(() => {
     const fetchProjects = async () => {
+      if (!serverUrl) return;
+
       if (externalProjects) {
         setProjects(sortByDate(externalProjects));
       } else {
         try {
-          console.log("Fetching projects...");
-          const response = await axios.get("/api/projects");
-          console.log("Projects received:", response.data);
+          const response = await axios.get(`${serverUrl}/api/projects`);
           setProjects(sortByDate(response.data));
         } catch (error) {
           console.error("Error fetching projects:", error);
@@ -74,24 +75,34 @@ function Projects({ isAdmin: externalIsAdmin, projects: externalProjects }) {
       }
     };
     fetchProjects();
-  }, [externalProjects, sortByDate]);
+  }, [externalProjects, sortByDate, serverUrl]);
 
-  // التحقق من حالة المشرف
+  // 4. التحقق من حالة المشرف باستخدام JWT
   useEffect(() => {
     const checkAdminStatus = async () => {
+      if (!serverUrl) return;
+      
       if (externalIsAdmin !== undefined) {
         setIsAdmin(externalIsAdmin);
       } else {
+        const token = localStorage.getItem('adminToken');
+        if (!token) {
+          setIsAdmin(false);
+          return;
+        }
         try {
-          const res = await axios.get("/api/auth/check", { withCredentials: true });
+          const res = await axios.get(`${serverUrl}/api/auth/check`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
           setIsAdmin(res.data.isAdmin);
         } catch (err) {
           setIsAdmin(false);
+          localStorage.removeItem('adminToken');
         }
       }
     };
     checkAdminStatus();
-  }, [externalIsAdmin]);
+  }, [externalIsAdmin, serverUrl]);
 
   const handleShowMore = () => setVisibleCount(prev => prev + 6);
   
@@ -112,11 +123,13 @@ function Projects({ isAdmin: externalIsAdmin, projects: externalProjects }) {
   const displayedProjects = filteredProjects.slice(0, visibleCount);
   const hasMoreProjects = filteredProjects.length > visibleCount;
 
+  // 5. تسجيل الدخول (JWT)
   const loginAsAdmin = async (password) => {
     setIsLoading(true);
     try {
-      const res = await axios.post("/api/auth/login", { password }, { withCredentials: true });
+      const res = await axios.post(`${serverUrl}/api/auth/login`, { password });
       if (res.data.success) {
+        localStorage.setItem('adminToken', res.data.token); // حفظ التوكن
         setIsAdmin(true);
         setShowLoginModal(false);
         setAdminError("");
@@ -124,24 +137,21 @@ function Projects({ isAdmin: externalIsAdmin, projects: externalProjects }) {
         setAdminError(res.data.message);
       }
     } catch (err) {
-      setAdminError("Login failed");
+      setAdminError(err.response?.data?.message || "Login failed");
     } finally {
       setIsLoading(false);
     }
   };
 
+  // 6. تسجيل الخروج (JWT)
   const logoutAdmin = async () => {
-    try {
-      await axios.post("/api/auth/logout", {}, { withCredentials: true });
-      setIsAdmin(false);
-      setShowProjectModal(false);
-      setShowEditModal(false);
-    } catch (err) {
-      console.error("Logout failed:", err);
-    }
+    localStorage.removeItem('adminToken'); // حذف التوكن
+    setIsAdmin(false);
+    setShowProjectModal(false);
+    setShowEditModal(false);
   };
 
-  // ✅ تحديث دالة إضافة مشروع
+  // 7. إضافة مشروع
   const handleAddProject = async (formData, selectedFile) => {
     setIsLoading(true);
     const submitData = new FormData();
@@ -153,28 +163,21 @@ function Projects({ isAdmin: externalIsAdmin, projects: externalProjects }) {
     if (selectedFile) submitData.append('image', selectedFile);
     else if (formData.img) submitData.append('imageUrl', formData.img);
     
-    // ✅ إرسال الروابط الجديدة
     submitData.append('liveLink', formData.liveLink || '');
     submitData.append('githubLink', formData.githubLink || '');
     
-    // ✅ إنشاء مصفوفة الروابط بشكل صحيح
     const links = [
-      { 
-        href: formData.liveLink || '#', 
-        icon: "/images/external-link.svg", 
-        title: "View Live" 
-      },
-      { 
-        href: formData.githubLink || '#', 
-        icon: "/images/github.svg", 
-        title: "View Code" 
-      }
+      { href: formData.liveLink || '#', icon: "/images/external-link.svg", title: "View Live" },
+      { href: formData.githubLink || '#', icon: "/images/github.svg", title: "View Code" }
     ];
     submitData.append('links', JSON.stringify(links));
 
     try {
-      const response = await axios.post("/api/projects", submitData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
+      const response = await axios.post(`${serverUrl}/api/projects`, submitData, {
+        headers: { 
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${localStorage.getItem('adminToken')}` 
+        }
       });
       setProjects(prev => sortByDate([response.data, ...prev]));
       setVisibleCount(6);
@@ -186,7 +189,7 @@ function Projects({ isAdmin: externalIsAdmin, projects: externalProjects }) {
     }
   };
 
-  // ✅ تحديث دالة تعديل مشروع
+  // 8. تعديل مشروع
   const handleEditProject = async (formData, selectedFile) => {
     if (!currentEditProject) return;
     setIsLoading(true);
@@ -199,28 +202,21 @@ function Projects({ isAdmin: externalIsAdmin, projects: externalProjects }) {
     updateData.append('tags', formData.tags);
     if (selectedFile) updateData.append('image', selectedFile);
     
-    // ✅ إرسال الروابط الجديدة
     updateData.append('liveLink', formData.liveLink || '');
     updateData.append('githubLink', formData.githubLink || '');
     
-    // ✅ إنشاء مصفوفة الروابط بشكل صحيح
     const links = [
-      { 
-        href: formData.liveLink || '#', 
-        icon: "/images/external-link.svg", 
-        title: "View Live" 
-      },
-      { 
-        href: formData.githubLink || '#', 
-        icon: "/images/github.svg", 
-        title: "View Code" 
-      }
+      { href: formData.liveLink || '#', icon: "/images/external-link.svg", title: "View Live" },
+      { href: formData.githubLink || '#', icon: "/images/github.svg", title: "View Code" }
     ];
     updateData.append('links', JSON.stringify(links));
 
     try {
-      const response = await axios.put(`/api/projects/${currentEditProject._id}`, updateData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
+      const response = await axios.put(`${serverUrl}/api/projects/${currentEditProject._id}`, updateData, {
+        headers: { 
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${localStorage.getItem('adminToken')}` 
+        }
       });
       
       setProjects(prev => {
@@ -236,11 +232,14 @@ function Projects({ isAdmin: externalIsAdmin, projects: externalProjects }) {
     }
   };
 
+  // 9. حذف مشروع
   const handleDeleteProject = async (id) => {
     if (!window.confirm("Delete this project?")) return;
     try {
       const projectToDelete = projects.find(p => p._id === id);
-      await axios.delete(`/api/projects/${id}`);
+      await axios.delete(`${serverUrl}/api/projects/${id}`, {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+      });
       setProjects(prev => prev.filter(p => p._id !== id));
       setDeletedProjects(prev => [projectToDelete, ...prev]);
     } catch (error) {
@@ -253,10 +252,13 @@ function Projects({ isAdmin: externalIsAdmin, projects: externalProjects }) {
     setShowEditModal(false);
   };
 
+  // 10. استعادة مشروع محذوف
   const handleRestoreLastDeleted = async () => {
     if (!deletedProjects.length) return;
     try {
-      const response = await axios.post("/api/projects", deletedProjects[0]);
+      const response = await axios.post(`${serverUrl}/api/projects`, deletedProjects[0], {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken')}` }
+      });
       setProjects(prev => sortByDate([response.data, ...prev]));
       setDeletedProjects(prev => prev.slice(1));
     } catch (error) {
