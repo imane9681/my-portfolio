@@ -24,13 +24,11 @@ const ProjectModal = ({
   const [serverUrl, setServerUrl] = useState(''); 
   const fileInputRef = useRef(null);
 
-  // جلب عنوان السيرفر
-  useEffect(() => {
-    fetch('/api/config')
-      .then(res => res.json())
-      .then(data => setServerUrl(data.serverUrl))
-      .catch(() => setServerUrl('http://localhost:5000'));
-  }, []);
+ // قراءة رابط الخادم من ملف .env
+useEffect(() => {
+  const url = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  setServerUrl(url);
+}, []);
 
   // تحديث معاينة الصورة عند تغيير projectData
   useEffect(() => {

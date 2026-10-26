@@ -18,35 +18,10 @@ function App() {
   const [serverUrl, setServerUrl] = useState('');
 
   useEffect(() => {
-  const fetchConfig = async () => {
-    try {
-      const response = await fetch('/api/config');
-      const data = await response.json();
-      
-      // ❌ لا تستخدم data.serverUrl لأنه يعيد localhost
-      // ✅ استخدم عنوان IP الصحيح
-      const hostname = window.location.hostname;
-      let serverUrl;
-      
-      if (hostname === 'localhost' || hostname === '127.0.0.1') {
-        serverUrl = 'http://localhost:5000';
-      } else {
-        // استخدم نفس عنوان IP الذي يستخدمه المتصفح
-        serverUrl = `http://${hostname}:5000`;
-      }
-      
-      console.log("✅ Server URL:", serverUrl);
-      setServerUrl(serverUrl);
-    } catch (err) {
-      console.error("❌ Error fetching config:", err);
-      const hostname = window.location.hostname;
-      setServerUrl(hostname === 'localhost' || hostname === '127.0.0.1' 
-        ? 'http://localhost:5000' 
-        : `http://${hostname}:5000`
-      );
-    }
-  };
-  fetchConfig();
+  // قراءة رابط الخادم من ملف .env
+  const url = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  setServerUrl(url);
+  console.log("✅ Server URL:", url);
 }, []);
 
   useEffect(() => {

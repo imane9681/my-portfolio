@@ -22,13 +22,11 @@ const EditProjectModal = ({
   const [imagePreview, setImagePreview] = useState(null);
   const [serverUrl, setServerUrl] = useState('');
 
-  // جلب عنوان السيرفر
-  useEffect(() => {
-    fetch('/api/config')
-      .then(res => res.json())
-      .then(data => setServerUrl(data.serverUrl))
-      .catch(() => setServerUrl('http://localhost:5000'));
-  }, []);
+  // قراءة رابط الخادم من ملف .env
+useEffect(() => {
+  const url = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  setServerUrl(url);
+}, []);
 
   // Update form data when project to edit changes
   useEffect(() => {

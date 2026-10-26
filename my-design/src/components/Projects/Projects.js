@@ -51,33 +51,11 @@ function Projects({ isAdmin: externalIsAdmin, projects: externalProjects }) {
 
   // جلب serverUrl
   useEffect(() => {
-    const fetchServerUrl = async () => {
-      try {
-        const response = await fetch('/api/config');
-        const data = await response.json();
-        
-        const hostname = window.location.hostname;
-        let serverUrl;
-        
-        if (hostname === 'localhost' || hostname === '127.0.0.1') {
-          serverUrl = 'http://localhost:5000';
-        } else {
-          serverUrl = `http://${hostname}:5000`;
-        }
-        
-        console.log('✅ Server URL:', serverUrl);
-        setServerUrl(serverUrl);
-      } catch (error) {
-        console.error('❌ Error fetching server URL:', error);
-        const hostname = window.location.hostname;
-        setServerUrl(hostname === 'localhost' || hostname === '127.0.0.1' 
-          ? 'http://localhost:5000' 
-          : `http://${hostname}:5000`
-        );
-      }
-    };
-    fetchServerUrl();
-  }, []);
+  // قراءة رابط الخادم من ملف .env
+  const url = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  setServerUrl(url);
+  console.log('✅ Server URL:', url);
+}, []);
 
   // جلب المشاريع
   useEffect(() => {
