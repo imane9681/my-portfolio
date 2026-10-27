@@ -53,10 +53,9 @@ function Footer() {
   ];
 
   const socialLinks = [
-    { icon: FiGithub, href: 'https://github.com', label: 'GitHub', color: '#333' },
-    { icon: FiLinkedin, href: 'https://linkedin.com', label: 'LinkedIn', color: '#0077B5' },
-    { icon: FiTwitter, href: 'https://twitter.com', label: 'Twitter', color: '#1DA1F2' },
-    { icon: FiInstagram, href: 'https://instagram.com', label: 'Instagram', color: '#E4405F' },
+    { icon: FiGithub, href: 'https://github.com/imane9681', label: 'GitHub', color: '#333' },
+    { icon: FiLinkedin, href: 'https://www.linkedin.com/in/imane-bouasla-001bba42b', label: 'LinkedIn', color: '#0077B5' },
+   
   ];
 
   const techIcons = [
@@ -217,7 +216,7 @@ function Footer() {
                   <div className="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-[#FBB267]/20 transition-all duration-300">
                     <FiMail className="w-4 h-4 text-white/40 group-hover:text-[#FBB267]" />
                   </div>
-                  <span className="group-hover:translate-x-1 transition-transform duration-300">imane.bouasla@example.com</span>
+                  <span className="group-hover:translate-x-1 transition-transform duration-300">bouaslaiman@gmail.com</span>
                 </a>
               </li>
               <li>
@@ -228,7 +227,7 @@ function Footer() {
                   <div className="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-[#FBB267]/20 transition-all duration-300">
                     <FiPhone className="w-4 h-4 text-white/40 group-hover:text-[#FBB267]" />
                   </div>
-                  <span className="group-hover:translate-x-1 transition-transform duration-300">+213 123 456 789</span>
+                  <span className="group-hover:translate-x-1 transition-transform duration-300">+213 07 81 59 09 28</span>
                 </a>
               </li>
               <li>
@@ -291,7 +290,7 @@ function Footer() {
        {/* Bottom Bar */}
         <div className="relative px-10 bg-gradient-to-r from-[#D5775D] via-[#FBB267] to-[#D5775D] py-5 md-py-3 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-white/70 text-xs sm:text-sm text-center">
-            &copy; {currentYear} MyDesign. All rights reserved.
+            &copy; {currentYear} MyPortfolio. All rights reserved.
           </p>
           
           <div className="flex items-center gap-3 md:pr-20 lg:pr-[10vw]">

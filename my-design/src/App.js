@@ -50,11 +50,16 @@ function App() {
   }, [serverUrl]);
 
   const handleNavClick = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const element = document.getElementById(sectionId);
+  if (element) {
+    // إعادة ضبط body قبل التمرير (احتياط لضمان عمل scrollIntoView)
+    document.body.style.position = '';
+    document.body.style.overflow = '';
+    document.body.style.width = '';
+
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+};
 
   if (!serverUrl) {
     return (

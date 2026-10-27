@@ -18,21 +18,21 @@ function Navbar({ onNavClick }) {
   }, []);
 
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
-    } else {
-      document.body.style.overflow = 'unset';
-      document.body.style.position = 'unset';
-      document.body.style.width = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-      document.body.style.position = 'unset';
-      document.body.style.width = 'unset';
-    };
-  }, [isMobileMenuOpen]);
+  if (isMobileMenuOpen) {
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+  } else {
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
+  }
+  return () => {
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+    document.body.style.width = '';
+  };
+}, [isMobileMenuOpen]);
 
   useEffect(() => {
     const sections = [
@@ -62,10 +62,14 @@ function Navbar({ onNavClick }) {
   }, []);
 
   const handleNavClick = (sectionId) => {
-    setIsMobileMenuOpen(false);
-    setActiveItem(sectionId);
+  setIsMobileMenuOpen(false);
+  setActiveItem(sectionId);
+
+  // تأخير التمرير حتى يُغلق السايد بار ويُزال position:fixed من body
+  setTimeout(() => {
     if (onNavClick) onNavClick(sectionId);
-  };
+  }, 350);
+};
 
   const navItems = [
     { name: 'Home', id: 'Home', icon: HiHome },
@@ -76,9 +80,8 @@ function Navbar({ onNavClick }) {
   ];
 
   const socialIcons = [
-    { icon: FiGithub, url: 'https://github.com', label: 'GitHub' },
-    { icon: FiLinkedin, url: 'https://linkedin.com', label: 'LinkedIn' },
-    { icon: FiTwitter, url: 'https://twitter.com', label: 'Twitter' }
+    { icon: FiGithub, url: 'https://github.com/imane9681', label: 'GitHub' },
+    { icon: FiLinkedin, url: 'https://www.linkedin.com/in/imane-bouasla-001bba42b', label: 'LinkedIn' },
   ];
 
   return (
