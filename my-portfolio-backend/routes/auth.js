@@ -12,14 +12,14 @@ router.post("/login", (req, res) => {
   if (password === process.env.ADMIN_PASSWORD) {
     // إنشاء توكن صالح لمدة 24 ساعة
     const token = jwt.sign({ isAdmin: true }, JWT_SECRET, { expiresIn: "24h" });
-    return res.json({ success: true, token, message: "تم تسجيل الدخول كمشرف" });
+    return res.json({ success: true, token, message: "Logged in as admin successfully" });
   }
-  res.status(401).json({ success: false, message: "كلمة السر غير صحيحة" });
+  res.status(401).json({ success: false, message: "Incorrect password" });
 });
 
 // 2. مسار تسجيل الخروج (في JWT لا نحتاج لحذف شيء في الخادم)
 router.post("/logout", (req, res) => {
-  res.json({ success: true, message: "تم تسجيل الخروج" });
+  res.json({ success: true, message: "Logged out successfully" });
 });
 
 // 3. مسار التحقق من الحالة (يقرأ التوكن من الهيدر)
